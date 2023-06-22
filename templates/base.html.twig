@@ -2,15 +2,45 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Anime Generation | {{titre}} {% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <meta name="description" content="Easily create a list of all the anime you've watched and keep track of your total watch time with our user-friendly website. Organize by genre, release year, or rating and receive personalized recommendations. Our platform automatically calculates your total watch time so you don't have to. Start tracking your anime viewing habits today and join our community of passionate fans.">
+        <script src="https://cdn.tailwindcss.com"></script>
         {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
         {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
+    <body class="bg-indigo-950  items-center  h-screen text-white">
+        <header>
+            <nav class="bg-gray-800 text-white px-6 py-4 shadow-md md:flex items-center justify-between">
+                <div class="flex justify-between items-center">
+                    <div class="text-2xl font-bold">
+                        <a href="/accueil" class="hover:text-gray-200"><img src="{{asset('imgs/logo.webp')}}" alt="Logo" class="w-12"></a>
+                    </div>
+                    <div class="md:hidden">
+                        <button type="button" class="block text-gray-200 hover:text-white focus:text-white focus:outline-none">
+                            <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                                <path d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="md:flex hidden">
+                    <a href="/accueil" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white mr-6">Accueil</a>
+                    <a href="/catalogue" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white mr-6">Catalogue</a>
+                    <a href="/agenda" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white mr-6">Agenda</a>
+                    <a href="/profil" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white">Profil</a>
+                </div>
+            </nav>
+        </header>
+
+        
         {% block body %}{% endblock %}
     </body>
 </html>
