@@ -8,6 +8,7 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         <meta name="description" content="Easily create a list of all the anime you've watched and keep track of your total watch time with our user-friendly website. Organize by genre, release year, or rating and receive personalized recommendations. Our platform automatically calculates your total watch time so you don't have to. Start tracking your anime viewing habits today and join our community of passionate fans.">
         <script src="https://cdn.tailwindcss.com"></script>
+        <script src="public/js/navbarr.js"><script>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -24,23 +25,75 @@
                         <a href="/accueil" class="hover:text-gray-200"><img src="{{asset('imgs/logo.webp')}}" alt="Logo" class="w-12"></a>
                     </div>
                     <div class="md:hidden">
-                        <button type="button" class="block text-gray-200 hover:text-white focus:text-white focus:outline-none">
+                        <button id="menu-toggle" type="button" class="block text-gray-200 hover:text-white focus:text-white focus:outline-none">
                             <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
                                 <path d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"/>
                             </svg>
                         </button>
                     </div>
                 </div>
-                <div class="md:flex hidden">
-                    <a href="/accueil" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white mr-6">Accueil</a>
-                    <a href="/catalogue" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white mr-6">Catalogue</a>
-                    <a href="/agenda" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white mr-6">Agenda</a>
-                    <a href="/profil" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white">Profil</a>
+                <div id="menu" class="md:flex hidden">
+                    <a href="/accueil" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white mr-6">{{navNameAccueil}}</a>
+                    <a href="/catalogue" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white mr-6">{{navNameCatalogue}}</a>
+                    <a href="/agenda" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white mr-6">{{navNameAgenda}}</a>
+                    <a href="/profil" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white">{{navNameProfil}}</a>
+                    <a id="" href="/connexion" class="hidden md:block mt-4 ml-10 md:inline-block md:mt-0 text-gray-200 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                        </svg>
+                    </a>
+                    <a href="/connexion" class="block md:hidden mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white">connexion</a>
                 </div>
             </nav>
         </header>
 
         
         {% block body %}{% endblock %}
+
+        <footer class="bg-gray-800 px-6 py-4 text-white mt-auto">
+            <div class="container flex flex-col items-center justify-between lg:flex-row mx-auto">
+                <div class="flex flex-col lg:flex-row items-center lg:justify-between w-full lg:w-auto">
+                    <div class="lg:mx-12 text-center lg:text-left">
+                        <h6 class="text-sm font-bold uppercase mb-2">Suivez-nous sur</h6>
+                        <div class="flex items-center justify-center lg:justify-start space-x-6">
+                            <a href="#">
+                                <i class="fab fa-facebook-f text-xl"></i>
+                            </a>
+                            <a href="#">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                            <a href="#">
+                                <i class="fab fa-twitter text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="lg:mx-12 text-center lg:text-left">
+                        <h6 class="text-sm font-bold uppercase mb-2">Liens obligatoires</h6>
+                        <ul class="text-sm">
+                            <li class="mb-2">
+                                <a href="#" class="text-gray-400 hover:text-white">Politique de confidentialité</a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-gray-400 hover:text-white">Conditions d'utilisation</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="w-full text-center lg:text-left lg:w-auto mt-6 lg:mt-0 lg:order-1">
+                    <p class="text-sm text-gray-400">
+                        Merci de votre visite ! © 2023 Anime Generation. Tous droits réservés.
+                    </p>
+                </div>
+            </div>
+        </footer>
     </body>
+    <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+
+    menuToggle.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+        menu.classList.toggle('md:flex');
+    });
+    </script>
 </html>
