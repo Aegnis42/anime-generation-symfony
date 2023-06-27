@@ -1,58 +1,65 @@
 {% extends 'base.html.twig' %}
 
+
 {% block body %}
     <h1 class="text-3xl text-center mt-3">Bienvenue sur Anime Generation</h1>
-    <h2 class="text-xl ml-40 mt-5">les plus recents</h2>
-    <section class="mx-40 mt-5 overflow-x-hidden whitespace-nowrap py-2">
-        {% for anime in latestAnime %}
-            <article class="inline-block relative rounded overflow-hidden shadow-lg m-2 h-96 w-52 cursor-pointer transition duration-500 ease-in-out transform hover:scale-105">
-                <a href="">
-                    <img class="w-full h-full object-cover" src="{{ anime.images.jpg.large_image_url }}" alt="Cover Image">
-                    <div class="px-6 py-4 bg-black bg-opacity-50 text-white absolute bottom-0 w-full">
-                        <h2 class="font-bold text-xl mb-2 truncate">{{ anime.title }}</h2>
-                        <p class="text-base">
-                            {{ anime.synopsis }}
-                        </p>
-                    </div>
-                </a>
+    <h2 class="text-xl ml-40 mt-5">Derniers ajouts</h2>
+    <section class="mx-40 mt-5 overflow-x-hidden   whitespace-nowrap py-2 ">
+        {% for anime in animes %}
+            <article class="inline-block rounded overflow-hidden shadow-lg m-2 h-96 w-52">
+                <div class="h-60 w-full overflow-hidden">
+                    <img class="w-full h-full object-cover" src="{{ anime.coverImage.large }}" alt="Cover Image">
+                </div>
+                <div class="px-6 py-4">
+                    <div class="font-bold text-xl mb-2">{{ anime.title.romaji }}</div>
+                    <p class="text-gray-700 text-base">
+                        {{ anime.description | slice(0, 100) }}...
+                    </p>
+                </div>
+                <div class="px-6 pt-4 pb-2">
+                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#{{ anime.genres | join(', #') }}</span>
+                </div>
             </article>
         {% endfor %}
     </section>
     <h2 class="text-xl ml-40 mt-5">Les plus populaires</h2>
-    <section class="mx-40 mt-5 overflow-x-hidden whitespace-nowrap py-2">
-        {% for anime in popularAnime %}
-            <article class="inline-block relative rounded overflow-hidden shadow-lg m-2 h-96 w-52 cursor-pointer transition duration-500 ease-in-out transform hover:scale-105">
-                <a href="#">
-                    <img class="w-full h-full object-cover" src="{{ anime.images.jpg.large_image_url }}" alt="Cover Image">
-                    <div class="px-6 py-4 bg-black bg-opacity-50 text-white absolute bottom-0 w-full">
-                        <h2 class="font-bold text-xl mb-2 truncate">{{ anime.title }}</h2>
-                        <p class="text-base">
-                            {{ anime.synopsis }}
-                        </p>
-                    </div>
-                </a>
+    <section class="mx-40 mt-5 overflow-x-hidden whitespace-nowrap py-2 ">
+        {% for anime_popular in popular_animes %}
+            <article class="inline-block rounded overflow-hidden shadow-lg m-2 h-96 w-52">
+                <div class="h-60 w-full overflow-hidden">
+                    <img class="w-full h-full object-cover" src="{{ anime_popular.coverImage.large }}" alt="Cover Image">
+                </div>
+                <div class="px-6 py-4">
+                    <div class="font-bold text-xl mb-2">{{ anime_popular.title.romaji }}</div>
+                    <p class="text-gray-700 text-base">
+                        {{ anime_popular.description | slice(0, 100) }}...
+                    </p>
+                </div>
+                <div class="px-6 pt-4 pb-2">
+                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#{{ anime_popular.genres | join(', #') }}</span>
+                </div>
             </article>
         {% endfor %}
     </section>
     <h2 class="text-xl ml-40 mt-5">Suggestion</h2>
     <section class="mx-40 mt-5 overflow-x-hidden whitespace-nowrap py-2 mb-5">
-        {% for suggestion in animeSuggestions|slice(0, 13) %}
-            {% for entry in suggestion.entry %}
-                <article class="inline-block relative rounded overflow-hidden shadow-lg m-2 h-96 w-52 cursor-pointer transition duration-500 ease-in-out transform hover:scale-105">
-                    <a href="#">
-                        <img class="w-full h-full object-cover" src="{{ entry.images.jpg.large_image_url }}" alt="Cover Image">
-                        <div class="px-6 py-4 bg-black bg-opacity-50 text-white absolute bottom-0 w-full">
-                            <h2 class="font-bold text-xl mb-2 truncate">{{ entry.title }}</h2>
-                            <p class="text-base">
-                                {{ suggestion.content }}
-                            </p>
-                        </div>
-                    </a>
-                </article>
-            {% endfor %}
+        {% for random_anime in random_animes %}
+            <article class="inline-block rounded overflow-hidden shadow-lg m-2 h-96 w-52">
+                <div class="h-60 w-full overflow-hidden">
+                    <img class="w-full h-full object-cover" src="{{ random_anime.coverImage.large }}" alt="Cover Image">
+                </div>
+                <div class="px-6 py-4">
+                    <div class="font-bold text-xl mb-2">{{ random_anime.title.romaji }}</div>
+                    <p class="text-gray-700 text-base">
+                        {{ random_anime.description | slice(0, 100) }}...
+                    </p>
+                </div>
+                <div class="px-6 pt-4 pb-2">
+                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#{{ random_anime.genres | join(', #') }}</span>
+                </div>
+            </article>
         {% endfor %}
     </section>
-    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
