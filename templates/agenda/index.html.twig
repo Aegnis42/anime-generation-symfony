@@ -1,5 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
- <div class="h-5/6"></div>
+    <h1 class="text-3xl text-center mt-3">Bienvenue sur Anime Generation</h1>
+    <h2 class="text-xl ml-40 mt-5">Planning des sorties</h2>
+    <section class="mx-40 mt-5 py-2">
+        {% for day, animes in week_animes %}
+            <h3 class="text-lg ml-40 mt-5">{{ day }}</h3>
+            <div class="overflow-x-hidden whitespace-nowrap py-2">
+                {% for anime in animes %}
+                    <article class="inline-block relative rounded overflow-hidden shadow-lg m-2 h-80 w-52 cursor-pointer transition duration-500 ease-in-out transform hover:scale-105">
+                        <a href="{{anime.siteUrl}}">
+                            <img class="w-full h-full object-cover" src="{{ anime.coverImage.large }}" alt="Cover Image">
+                            <div class="px-6 py-4 bg-black bg-opacity-50 text-white absolute bottom-0 w-full">
+                                <h2 class="font-bold text-xl mb-2 truncate">{{ anime.title.romaji }}</h2>
+                                <p class="text-base">
+                                    {{ anime.description | slice(0, 19) }}...
+                                </p>
+                            </div>
+                        </a>
+                    </article>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $('section > div').on('mousewheel', function(e){
+            e.preventDefault();
+            var scrollAmount = e.originalEvent.wheelDelta / 3;
+            $(this).scrollLeft($(this).scrollLeft() - scrollAmount);
+        });
+    });
+</script>
 {% endblock %}
