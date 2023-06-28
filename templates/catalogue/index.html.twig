@@ -1,6 +1,32 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
- <div class="h-5/6"></div>
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <h2 class="text-2xl font-semibold mb-2">Catalogue</h2>
+        <div class="grid grid-cols-5 gap-6">
+            {% for anime in animes %}
+                <article class="inline-block relative rounded overflow-hidden shadow-lg m-2 h-96 w-52 cursor-pointer transition duration-500 ease-in-out transform hover:scale-105">
+                    <a href="{{ anime.siteUrl }}">
+                        <img class="w-full h-full object-cover" src="{{ anime.coverImage.large }}" alt="Cover Image">
+                        <div class="px-6 py-4 bg-black bg-opacity-50 text-white absolute bottom-0 w-full">
+                            <h2 class="font-bold text-xl mb-2 truncate">{{ anime.title.romaji }}</h2>
+                            <p class="text-base">
+                                {# Note: The 'description' field is not provided in the provided GraphQL query. You might need to add it to the query. #}
+                                {{ anime.description | slice(0, 18) }}...
+                            </p>
+                        </div>
+                    </a>
+                </article>
+            {% endfor %}
+        </div>
+        <div class="mt-8">
+            {% if pageInfo.currentPage > 1 %}
+                <a href="{{ path('app_catalogue', {page: pageInfo.currentPage - 1}) }}" class="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Previous</a>
+            {% endif %}
+
+            {% if pageInfo.hasNextPage %}
+                <a href="{{ path('app_catalogue', {page: pageInfo.currentPage + 1}) }}" class="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Next</a>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

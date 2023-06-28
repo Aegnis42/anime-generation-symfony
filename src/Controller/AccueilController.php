@@ -13,7 +13,7 @@ class AccueilController extends AbstractController
     public function index(): Response
     {
         $client = new Client();
-
+    
         $response = $client->request('POST', 'https://anilist-graphql.p.rapidapi.com/', [
             'headers' => [
                 'X-RapidAPI-Host' => 'anilist-graphql.p.rapidapi.com',
@@ -22,7 +22,7 @@ class AccueilController extends AbstractController
             ],
             'json' => [
                 'query' => '{
-                    Page(page: 1, perPage: 25) {
+                    releasing: Page(page: 1, perPage: 25) {
                         media(type: ANIME, status: RELEASING, isAdult: false, sort: START_DATE_DESC) {
                             id
                             title {
@@ -49,22 +49,8 @@ class AccueilController extends AbstractController
                             description
                             siteUrl
                         }
-                    }
-                }'
-            ]
-        ]);
-
-        $data = json_decode($response->getBody(), true);
-
-        $response_popular = $client->request('POST', 'https://anilist-graphql.p.rapidapi.com/', [
-            'headers' => [
-                'X-RapidAPI-Host' => 'anilist-graphql.p.rapidapi.com',
-                'X-RapidAPI-Key' => '6c0ccbfc24mshe8f5e23bcd6c445p173993jsne63638fc4bfd',
-                'content-type' => 'application/json',
-            ],
-            'json' => [
-                'query' => '{
-                    Page(page: 1, perPage: 25) {
+                    },
+                    popular: Page(page: 1, perPage: 25) {
                         media(type: ANIME, isAdult: false, sort: POPULARITY_DESC) {
                             id
                             title {
@@ -91,22 +77,8 @@ class AccueilController extends AbstractController
                             description
                             siteUrl
                         }
-                    }
-                }'
-            ]
-        ]);
-
-        $data_popular = json_decode($response_popular->getBody(), true);
-
-        $response_random = $client->request('POST', 'https://anilist-graphql.p.rapidapi.com/', [
-            'headers' => [
-                'X-RapidAPI-Host' => 'anilist-graphql.p.rapidapi.com',
-                'X-RapidAPI-Key' => '6c0ccbfc24mshe8f5e23bcd6c445p173993jsne63638fc4bfd',
-                'content-type' => 'application/json',
-            ],
-            'json' => [
-                'query' => '{
-                    Page(page: 1, perPage: 100) {
+                    },
+                    random: Page(page: 1, perPage: 100) {
                         media(type: ANIME, isAdult: false) {
                             id
                             title {
@@ -137,15 +109,15 @@ class AccueilController extends AbstractController
                 }'
             ]
         ]);
-
-        $data_random = json_decode($response_random->getBody(), true);
-
+    
+        $data = json_decode($response->getBody(), true);
+    
         // Mélange les données récupérées
-        shuffle($data_random['data']['Page']['media']);
-
+        shuffle($data['data']['random']['media']);
+    
         // Ne prend que les 25 premiers éléments après mélange
-        $data_random = array_slice($data_random['data']['Page']['media'], 0, 25);
-
+        $data_random = array_slice($data['data']['random']['media'], 0, 25);
+    
         return $this->render('accueil/index.html.twig', [
             'controller_name' => 'AccueilController',
             'titre' => 'Accueil',
@@ -153,8 +125,8 @@ class AccueilController extends AbstractController
             'navNameCatalogue' => 'Catalogue',
             'navNameAgenda' => 'Agenda',
             'navNameProfil' => 'Profil',
-            'animes' => $data['data']['Page']['media'],
-            'popular_animes' => $data_popular['data']['Page']['media'],
+            'animes' => $data['data']['releasing']['media'],
+            'popular_animes' => $data['data']['popular']['media'],
             'random_animes' => $data_random
         ]);
     }

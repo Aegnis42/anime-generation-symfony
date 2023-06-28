@@ -1,5 +1,31 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
- <div class="h-5/6"></div>
+    <h1 class="text-center text-4xl mb-8">Agenda</h1>
+
+    <div class="grid grid-cols-7 gap-4 px-10 mx-40">
+        {% for day, animes_in_day in animes %}
+            <div>
+                <h2 class="text-center text-2xl mb-4">{{ day }}</h2>
+
+                {% if animes_in_day is empty %}
+                    <p class="text-center">No anime releases on this day.</p>
+                {% else %}
+                    {% for anime in animes_in_day %}
+                        <article class="relative rounded overflow-hidden shadow-lg h-56 w-full cursor-pointer transition duration-500 ease-in-out transform hover:scale-105 mb-4">
+                            <a href="{{ anime.media.siteUrl }}">
+                                <img class="w-full h-full object-cover" src="{{ anime.media.coverImage.large }}" alt="{{ anime.media.title.english }}">
+                                <div class="px-6 py-4 bg-black bg-opacity-50 text-white absolute bottom-0 w-full">
+                                    <h3 class="font-bold text-xl mb-2 truncate">{{ anime.media.title.english }}</h3>
+                                    <p class="text-base">
+                                        Episode: {{ anime.episode }}
+                                    </p>
+                                </div>
+                            </a>
+                        </article>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
